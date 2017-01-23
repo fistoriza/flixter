@@ -2,6 +2,10 @@
 
 <div class="booyah-box col-xs-10 col-xs-offset-1">
   <h1><%= @course.title %></h1>
+  <div class="col-sm-8 col-xs-12">
+    <%= @course.description %>
+  </div>
+  <br />
   <br />
   <div class="col-sm-4 col-xs-12 text-center">
     <span class="label label-default">
@@ -11,12 +15,28 @@
     <% if current_user && current_user == @course.user %>
       <br />
       <br />
-      <%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-large' %>
+      <%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-xs' %>
     <% end %>
   </div>
-
-  <div class="col-sm-8 col-xs-12">
-    <%= @course.description %>
+  <div class="col-xs-12">
+  <br />
+  <br />
+    <% @course.sections.each do |section| %>
+      <div class="section">
+        <h4><%= section.title %></h4>
+        <% section.lessons.each do |lesson| %>
+          <div class="lesson">
+            <li>
+            <%= link_to lesson_path(lesson) do %>
+              <b><%= lesson.title %></b>
+              -
+              <%= lesson.subtitle %>
+            <% end %>
+            </li>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
 </div>
